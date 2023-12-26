@@ -43,14 +43,14 @@ EXIT_FAILED: equ 0x01
 
 section .text
 
-; exit(%0 code) -> void
+; exit(dd %0(code)) -> void
 exit:
 	xor rax, rax
     mov rax, SYS_EXIT
     syscall
 	ret
 
-; write(%0 fd, %1 buffer, %2 len) -> dd
+; write(dd %0(fd), db %1(buffer), dq %2(len)) -> dd
 write:
 	mov rax, SYS_WRITE
 	syscall

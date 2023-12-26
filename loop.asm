@@ -24,7 +24,7 @@ main:
 	jmp .exit 
 
 .loop:
-	mov rdi, STDOUT ; %0
+	mov edi, STDOUT ; %0
 	mov rsi, BUFFER ; %1
 	mov rdx, BUFFER_LEN ; %2
 	call write

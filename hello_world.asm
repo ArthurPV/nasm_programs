@@ -13,7 +13,7 @@ _start:
 	call main
 
 main:
-	mov rdi, STDOUT
+	mov edi, STDOUT
 	mov rsi, BUFFER,
 	mov rdx, BUFFER_LEN
 	call write
