@@ -1,4 +1,4 @@
-# ASM program
+# NASM programs
 
 NOTE: The ASM programs are written for 64-bit Linux devices.
 
