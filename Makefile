@@ -10,10 +10,13 @@ ${OBJ_DIR}:
 hello_world.o: hello_world.asm
 	${NASM} $<
 
+input.o: input.asm
+	${NASM} $<
+
 loop.o: loop.asm
 	${NASM} $<
 
-objs: ${OBJ_DIR} hello_world.o loop.o
+objs: ${OBJ_DIR} hello_world.o input.o loop.o
 
 ${BIN_DIR}:
 	@mkdir -p ${BIN_DIR}
@@ -21,10 +24,13 @@ ${BIN_DIR}:
 hello_world: ${OBJ_DIR}/hello_world.o
 	${LD} $< -o ${BIN_DIR}/$@
 
+input: ${OBJ_DIR}/input.o
+	${LD} $< -o ${BIN_DIR}/$@
+
 loop: ${OBJ_DIR}/loop.o
 	${LD} $< -o ${BIN_DIR}/$@
 
-bins: ${BIN_DIR} hello_world loop
+bins: ${BIN_DIR} hello_world input loop
 
 all: objs bins
 

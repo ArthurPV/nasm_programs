@@ -17,8 +17,8 @@ main:
 	jmp .cond 
 
 .cond:
-	mov rdi, 0xA
-	cmp [rsp], rdi
+	mov edi, 0xA
+	cmp [rsp], edi
 	jl .loop 
 	add rsp, 8 ; clear stack (8 bytes)
 	jmp .exit 

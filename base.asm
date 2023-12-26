@@ -50,6 +50,12 @@ exit:
     syscall
 	ret
 
+; read(dd %0(fd), db %1(buffer), dq %2(len)) -> dd
+read:
+	mov rax, SYS_READ
+	syscall
+	ret
+
 ; write(dd %0(fd), db %1(buffer), dq %2(len)) -> dd
 write:
 	mov rax, SYS_WRITE
