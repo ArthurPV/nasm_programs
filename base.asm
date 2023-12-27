@@ -64,13 +64,13 @@ write:
 	syscall
 	ret
 
-; str.len(db %0(buffer)) -> dq
-str.len:
+; len__Str(db %0(buffer)) -> dq
+len__Str:
 	push qword 0 ; qword str.len.count(#0) = 0
+	mov rdx, rdi ; save rdi address
 	jmp .cond
 
 .cond:
-	mov rdx, rdi ; save rdi address
 	add rdi, [rsp] ; forward to rdi+str.len.count(#0) address
 	cmp byte [rdi], EOF ; verify if the rdi value is not equal to EOF
 	jne .loop
