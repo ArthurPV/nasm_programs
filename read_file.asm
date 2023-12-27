@@ -2,9 +2,11 @@
 
 section .data
 
+MSG_ERROR: db "error: unable to read file", 10
 FILENAME: db "README.md"
-FILENAME_LEN: equ $-FILENAME
 
+MSG_ERROR_LEN: equ $-MSG_ERROR
+FILENAME_LEN: equ $-FILENAME
 FILE_CONTENT_BUFFER_LEN: equ 1000
 
 section .bss
@@ -27,9 +29,19 @@ main:
 	mov edx, S_IRWXU
 	call open
 
+	cmp rax, 0 ; check if rax is less than 0
+	jl .error
 	push rax ; dword .open.file(#0) = rax
-
 	jmp .read
+
+.error:
+	mov edi, STDOUT
+	mov rsi, MSG_ERROR
+	mov rdx, MSG_ERROR_LEN
+	call write
+
+	mov edi, EXIT_FAILED
+	call exit
 
 .read:
 	mov rdi, [rsp]
