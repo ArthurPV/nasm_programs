@@ -9,6 +9,9 @@ BUFFER_WRITE_LEN: equ $-BUFFER_WRITE
 BUFFER_ANSWER: db "Your name is "
 BUFFER_ANSWER_LEN: equ $-BUFFER_ANSWER
 
+ERROR_MSG: db "error: the input is too long", 10
+ERROR_MSG_LEN: equ $-ERROR_MSG
+
 section .bss
 
 buffer_input: resb 20

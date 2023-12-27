@@ -41,23 +41,46 @@ STDERR: equ 0x02
 EXIT_SUCCESS: equ 0x00
 EXIT_FAILED: equ 0x01
 
+EOF: equ 0x00 ; '\0'
+
 section .text
 
 ; exit(dd %0(code)) -> void
 exit:
 	xor rax, rax
-    mov rax, SYS_EXIT
+    mov eax, SYS_EXIT
     syscall
 	ret
 
 ; read(dd %0(fd), db %1(buffer), dq %2(len)) -> dd
 read:
-	mov rax, SYS_READ
+	mov eax, SYS_READ
 	syscall
 	ret
 
 ; write(dd %0(fd), db %1(buffer), dq %2(len)) -> dd
 write:
-	mov rax, SYS_WRITE
+	mov eax, SYS_WRITE
 	syscall
+	ret
+
+; str.len(db %0(buffer)) -> dq
+str.len:
+	push qword 0 ; qword str.len.count(#1) = 0
+	jmp .cond
+
+.cond:
+	mov rdx, rdi ; save rdi address
+	add rdi, [rsp] ; rdi += [rsp]
+	cmp byte [rdi], EOF
+	jne .loop
+	jmp .exit
+
+.loop:
+	mov rdi, rdx ; restore rdi address
+	inc qword [rsp] ; ++str.len.count(#1)
+	jmp .cond
+
+.exit:
+	pop qword rax ; rax = str.len.count(#1)
 	ret
