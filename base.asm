@@ -66,21 +66,21 @@ write:
 
 ; str.len(db %0(buffer)) -> dq
 str.len:
-	push qword 0 ; qword str.len.count(#1) = 0
+	push qword 0 ; qword str.len.count(#0) = 0
 	jmp .cond
 
 .cond:
 	mov rdx, rdi ; save rdi address
-	add rdi, [rsp] ; rdi += [rsp]
-	cmp byte [rdi], EOF
+	add rdi, [rsp] ; forward to rdi+str.len.count(#0) address
+	cmp byte [rdi], EOF ; verify if the rdi value is not equal to EOF
 	jne .loop
 	jmp .exit
 
 .loop:
 	mov rdi, rdx ; restore rdi address
-	inc qword [rsp] ; ++str.len.count(#1)
+	inc qword [rsp] ; ++str.len.count(#0)
 	jmp .cond
 
 .exit:
-	pop qword rax ; rax = str.len.count(#1)
+	pop qword rax ; rax = str.len.count(#0)
 	ret
