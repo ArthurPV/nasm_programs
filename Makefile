@@ -19,7 +19,10 @@ loop.o: loop.asm
 read_file.o: read_file.asm
 	${NASM} $<
 
-objs: ${OBJ_DIR} hello_world.o input.o loop.o read_file.o
+write_file.o: write_file.asm
+	${NASM} $<
+
+objs: ${OBJ_DIR} hello_world.o input.o loop.o read_file.o write_file.o
 
 ${BIN_DIR}:
 	@mkdir -p ${BIN_DIR}
@@ -36,7 +39,10 @@ loop: ${OBJ_DIR}/loop.o
 read_file: ${OBJ_DIR}/read_file.o
 	${LD} $<
 
-bins: ${BIN_DIR} hello_world input loop read_file
+write_file: ${OBJ_DIR}/write_file.o
+	${LD} $<
+
+bins: ${BIN_DIR} hello_world input loop read_file write_file
 
 all: objs bins
 
